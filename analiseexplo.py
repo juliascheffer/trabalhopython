@@ -18,16 +18,18 @@ estatisticas_descritivas = df_resumo.describe()
 print("Resumo Estatístico:")
 print(estatisticas_descritivas.to_string())
 
-# histograma das streams
+# histograma das streams top 10
+df['streams'] = pd.to_numeric(df['streams'], errors='coerce')
+
+top_10_musicas_2023 = df[df['released_year'] == 2023].nlargest(10, 'streams')
+
 plt.figure(figsize=(10, 6))
-sns.histplot(df['streams'], bins=20, kde=True, color='white')
-plt.title("Distribuição das Streams em 2023")
+sns.histplot(top_10_musicas_2023['streams'], bins=20, kde=True, color='skyblue')
+plt.title("Distribuição das Streams das 10 Músicas Mais Populares de 2023")
 plt.xlabel("Streams")
 plt.ylabel("Contagem")
 plt.grid(True)
 plt.show()
-
-df['streams'] = pd.to_numeric(df['streams'], errors='coerce')
 
 # outliers
 plt.figure(figsize=(10, 6))
